@@ -56,7 +56,6 @@ def checkShipStatus(shipList, shipMap):
             if shipList[index] in list:
                 shipStatus[index] = True
     return shipStatus
-
 # --- Game variables ---
 gridSize = 10
 validRows = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -64,6 +63,7 @@ validColumns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
 shipSymbols = ["B", "S", "D", "C"]
 shipNames = ["BATTLESHIP", "SUBMARINE", "DESTROYER", "CARRIER"]
 playing = True
+#comment up to here for Yana
 
 # --- Welcome message and UX code ---
 print("---------------------------\n"
@@ -120,7 +120,7 @@ while playing:
         for counter in range(gridSize):
             print(str(counter) + " " + " ".join(currentMap[counter]))
 
-        print("---------------------------\n"
+print("---------------------------\n"
               "MISSILES REMAINING: " + str(missileCount))
 
         # --- Get location input from the user for their shot ---
@@ -136,7 +136,7 @@ while playing:
                 previousShots.append(userShot)
                 shotCoordinateList = shotToNumbers(userShot, validColumns)
                 break
-
+#zahra will comment up to here
         print("---------------------------")
 
         # --- Check the shot vs. shipMap to verify a hit or miss ---
@@ -179,6 +179,7 @@ while playing:
             break
         else:
             print("Unknown inout, please enter Y or N")
+#bana will comment upto here
 
     # ----------- End of the Game. -----------
 
