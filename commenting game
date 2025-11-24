@@ -156,7 +156,7 @@ while playing:
         for counter in range(gridSize):
             print(str(counter) + " " + " ".join(currentMap[counter]))
 
-print("---------------------------\n"
+        print("---------------------------\n"
               "MISSILES REMAINING: " + str(missileCount))
 
         # --- Get location input from the user for their shot ---
