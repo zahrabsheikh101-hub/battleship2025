@@ -120,57 +120,68 @@ print("Welcome to Battleships Admiral!\n"
 # ----------- Starting the Game. Code will need to loop until the user quits. -----------
 while playing:
     # --- Initializing the ship locations ---
-    fileName = "battleshipMap.txt"      # file where the ship layout is kept
-    accessMode = "r"                    # access mode r to read the file
-    shipMap = []
+    fileName = "battleshipMap.txt"      # Z.S. File that stores the preset ship positions. In our own game, we will create oru own files for our own game board.
+    accessMode = "r"                    # Z.S. File access mode: read-only
+    shipMap = []                        # Z.S. List that will hold ship layout from file
+
 
     try:
+        # Z.S. Open the ship layout file and enter each row into shipMap
         with open(fileName, accessMode) as fileData:
             shipLocations = csv.reader(fileData)
             for row in shipLocations:
                 shipMap.append(row)
     except FileNotFoundError:
+        # Z.S. If map file cannot be found, an error message is shown
         print("Sorry, there was an error loading a required file.")
 
     # --- Difficulty select. Loop created to ensure valid input entered. ---
     while True:
         difficulty = input("What difficulty would you like to play? (easy/hard) ").lower()
         if difficulty == "easy":
-            missileCount = 50  # missileCount used to limit the players guess total
+            missileCount = 50  # Z.S. Easy mode gives the player 50 total missiles
             break
         elif difficulty == "hard":
-            missileCount = 35  # missileCount used to limit the players guess total
+            missileCount = 35  # Z.S. Hard mode gives the player 35 missiles to make the game more dofficult to win
+            break # Z.S. There are two breaks here which is redundant. This will be corrected in oru own version of the game
+            
             break
         else:
-            print("Please enter a valid difficulty setting.")
+            print("Please enter a valid difficulty setting.") # Z.S. If invalid input is entered, an error message is shown
+
 
     # --- Variables to be set before each round ---
-    currentMap = generateStartMap(gridSize)
-    previousShots = []
+    currentMap = generateStartMap(gridSize) # Z.S. Creates empty map for user to start playing
+    previousShots = [] # Z.S. List stores coordinates the user has aready targeted
 
     # ------ Starting the round. Code will need to loop until the user runs out of guesses or wins. ------
     while missileCount > 0:
         # --- Display currentMap to the user ---
         print("---------------------------")
-        print("  " + " ".join(validColumns))
+        print("  " + " ".join(validColumns))  # Z.S. Prints the axis of the columns of the map labeled from A-J. I beleive this grid is too large, so in our version the grid wil be smaller
         for counter in range(gridSize):
-            print(str(counter) + " " + " ".join(currentMap[counter]))
+            print(str(counter) + " " + " ".join(currentMap[counter])) # Z.S. Prints rows of the map 
 
         print("---------------------------\n"
               "MISSILES REMAINING: " + str(missileCount))
 
         # --- Get location input from the user for their shot ---
         while True:
+            # Z.S. The loop will continue to prompt the user for a coordinate until the user enters an acceptable string
             userShot = input("Enter the coordinates you wish to shoot: ").upper()
             if len(userShot) != 2:
+                # Z.S. Ensures the user enters a coorindate with the first character for the column and the second for the row
                 print("Please enter a valid coordinate:")
             elif userShot in previousShots:
+                # Z.S. Ensures the user does not repeat shots
                 print("You've already shot there, pick a different coordinate.")
             elif userShot[0] not in validColumns or userShot[1] not in validRows:
+                # Z.S. Ensures the user does not enter a coorindate outside of the grid (e.g. Z100)
                 print("Please choose a coordinate in range.")
             else:
-                previousShots.append(userShot)
-                shotCoordinateList = shotToNumbers(userShot, validColumns)
+                # Z.S. If none of the above conditions are fullfilled, the user will have entered an acceptable answer and the loop will break
+                previousShots.append(userShot) # Z.S. The coorindates entered will be added to the list of shots the user has made
+                shotCoordinateList = shotToNumbers(userShot, validColumns) 
                 break
 #zahra will comment up to here
         print("---------------------------")
