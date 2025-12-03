@@ -186,15 +186,23 @@ while playing:
 #zahra will comment up to here
         print("---------------------------")
 
-        # --- Check the shot vs. shipMap to verify a hit or miss ---
+        #BM: Check if the shot is a hit or miss
         shotResult = checkHit(shotCoordinateList, shipMap)
         print(shotResult[1])
 
         # --- Update the  game map to refer to when checking ship status ---
+        #BM: Update the enemy map to show that this location was fired at.
+        #BM: The spot is marked with an so future checks know that this location has been fired at.
         shipMap = updateMap(shotCoordinateList, "X", shipMap)
 
         # - Check the status of the ships to check win condition -
+        #BM: shipsStillAlive is a list that contains booleans for each ship
+        # BM: "True"  indicates that the ship still has at least one segment remaining
+        # BM: "False" implies that ship has completely sunk
+
         shipsStillAlive = checkShipStatus(shipSymbols, shipMap)
+        #BM: Loop through the ships and announce which are alive or sunk
+
         for index in range(len(shipsStillAlive)):
             if shipsStillAlive[index]:
                 print("The " + shipNames[index] + " still sails!")
@@ -202,31 +210,41 @@ while playing:
                 print("You have sunk the " + shipNames[index] + "!")
 
         # --- Update currentMap ---
+        #BM: Update the player's map (currentMap) ---
+        #BM: shotResult[0] contains the symbol "X" for hit, "O" for miss
+        #BM: currentMap is the map that the player currently sees on screen
+
         currentMap = updateMap(shotCoordinateList, shotResult[0], currentMap)
 
         # - Check win condition. If not ships remain end the game. ---
+        #BM: if no ship is alive anymore (no True values left), the game is over
+
         if True not in shipsStillAlive:
             print("Good shooting! You have destroyed the enemy fleet!")
-            break
+            break #BM: exit the loop
+ 
+        # - Check lose condition. Modify the missile count then check if the user has shots remaining. 
 
-        # - Check lose condition. Modify the missile count then check if the user has shots remaining. -
+        #BM: Each turn, the player uses one missile.
+        #BM: If the missile count reaches zero, the player cannot shoot anymore → game lost
         missileCount -= 1
         if missileCount == 0:
             print("Looks like the enemy fleet has escaped the harbour! You had better get your crew in order Admiral!")
 
         # ------ End of the Round. ------
     print("---------------------------")
+
+    #BM: ask the player if they would like to play again
     userContinue = input("Would you like to play again? (Y/N) ").upper()
-    while True:
+    while True: 
         if userContinue == "Y":
-            playing = True
+            playing = True #BM: restarts the main game loop 
             break
         elif userContinue == "N":
-            playing = False
+            playing = False #BM: ends the program after the loop finishes
             break
         else:
             print("Unknown inout, please enter Y or N")
-#bana will comment upto here
 
     # ----------- End of the Game. -----------
 
