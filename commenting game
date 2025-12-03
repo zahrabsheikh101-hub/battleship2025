@@ -1,32 +1,38 @@
+# This program is commented by :
+# YP - Yana Patel (21205694)
+# ZS - Zahra Sheikh (21191679)
+# BM - Bana Maarouf (21221998)
+
 # --- Import needed data libraries ---
 import csv # Used for reading/writing CSV files (not used yet here, but likely later in the game)
 
+#start of Yana's Comments
 # --- Function definition for generateStartMap ---
 # Will take in the size of the map to be made and produce an empty starting map for the game.
 # size = how many rows and columns the map should have (ex: 10x10)
 def generateStartMap(size):
-    startingMap = [] # this will become our 2D grid
+    startingMap = [] # this will become our 2D grid YP
     # loop for each row
     for counter in range(size):
-        currentLine = [] # one row of the map
+        currentLine = [] # one row of the map YP
 
-        # loop for each column in that row
+        # loop for each column in that row YP
         for counter in range(size):
-            currentLine.append("~") # "~" represents empty water
+            currentLine.append("~") # "~" represents empty water YP
         startingMap.append(currentLine) #add the completed row to the map
 
     return startingMap #return the finished 2D list
 
 # --- Function definition for shotToNumbers ---
-# Will take in a string of a letter and number and return a list of two numbers.
-# Example: "A5" becomes [5, 0] (row 5, column 0)
+# Will take in a string of a letter and number and return a list of two numbers. YP
+# Example: "A5" becomes [5, 0] (row 5, column 0) YP
 def shotToNumbers(coordinateString, headingsList): 
     shotList = []
 
-    #get the row number (the number part of the input)
+    #get the row number (the number part of the input) YP
     shotList.append(int(coordinateString[1]))
 
-    # Find the column index by matching the letter
+    # Find the column index by matching the letter YP
     for column in headingsList:
         if coordinateString[0] == column:
             shotList.append(headingsList.index(column))
@@ -34,72 +40,71 @@ def shotToNumbers(coordinateString, headingsList):
     return shotList
 
 # --- Function definition for checkHit ---
-# Will take in shotCoordinateList and shipMap and return whether the shot hit or missed.
-# Checks if a shot hits water or a ship
-# shot = [row, column]
-# map = the hidden ship map
+# Will take in shotCoordinateList and shipMap and return whether the shot hit or missed. YP
+# Checks if a shot hits water or a ship YP
+# shot = [row, column] YP
+# map = the hidden ship map YP
 def checkHit(shot, map):
 
-    # Miss (empty ocean)
+    # Miss (empty ocean) YP
     if map[shot[0]][shot[1]] == "O":
         return ["X", "Miss!"]
 
-    # battleship hit
+    # battleship hit YP
     elif map[shot[0]][shot[1]] == "B":
         return ["B", "You hit the BATTLESHIP!"]
 
-    # submarine hit
+    # submarine hit YP
     elif map[shot[0]][shot[1]] == "S":
         return ["S", "You hit the SUBMARINE!"]
 
-    # Destroyer hit
+    # Destroyer hit YP
     elif map[shot[0]][shot[1]] == "D":
         return ["D", "You hit the DESTROYER!"]
 
-    # Carrier hit
+    # Carrier hit YP
     elif map[shot[0]][shot[1]] == "C":
         return ["C", "You hit the CARRIER!"]
 
 # --- Function definition for updateMap ---
-# Takes in the current map and the last shot results and returns an updated map.
-# lastShotCell = [row, col]
-# lastShotResult = "X" (miss) or ship symbol
+# Takes in the current map and the last shot results and returns an updated map. YP
+# lastShotCell = [row, col] YP
+# lastShotResult = "X" (miss) or ship symbol YP
 def updateMap(lastShotCell, lastShotResult, map):
     map[lastShotCell[0]][lastShotCell[1]] = lastShotResult # replace symbol at shot location
     return map
 
 # --- Function definition for checkShipStatus ---
-# Will check the ship layout to check which ships have been sunk.
-# Returns a list of True/False values for each ship
+# Will check the ship layout to check which ships have been sunk. YP
+# Returns a list of True/False values for each ship YP
 def checkShipStatus(shipList, shipMap):
     shipStatus = []
 
-    # Start by assuming all ships are NOT found
+    # Start by assuming all ships are not found YP
     for index in range(len(shipList)):
         shipStatus.append(False)
 
-    #search the map for each ship symbol
+    #search the map for each ship symbol YP
     for index in range(len(shipList)):
         for list in shipMap:
             if shipList[index] in list:
-                shipStatus[index] = True # ship still exists on the board
+                shipStatus[index] = True # ship still exists on the board YP
     return shipStatus
 # --- Game variables ---
 gridSize = 10 #10x10 board
 
-# Valid row numbers as strings for user input
+# Valid row numbers as strings for user input YP
 validRows = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-# Valid column letters for user input
+# Valid column letters for user input YP
 validColumns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
 
-# Ship symbols used on the hidden map
+# Ship symbols used on the hidden map YP
 shipSymbols = ["B", "S", "D", "C"]
 
-# Full ship names for messages
+# Full ship names for messages YP
 shipNames = ["BATTLESHIP", "SUBMARINE", "DESTROYER", "CARRIER"]
 playing = True #controls the main game loop
-#comment up to here for Yana
 
 # --- Welcome message and UX code ---
 print("---------------------------\n"
